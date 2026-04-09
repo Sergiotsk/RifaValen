@@ -112,11 +112,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.4s ease;
-    }
-
-    .photo-card:hover img {
-      transform: scale(1.15);
     }
 
     .photo-card .placeholder {
@@ -949,23 +944,25 @@
   <div id="app">
     <div class="header">
       <h1 id="main-title">🎰 RIFA VALEN</h1>
-      <p>¡Ayudalo a cumplir su sueño del karate! 🥋</p>
+      <p>¡Ayudalo a comprar sus guantes y pagar el examen de cinturón punta amarilla! 🥋</p>
     </div>
 
     <!-- Photos -->
     <div class="photos-grid">
       <div class="photo-card" id="photo-valen">
-        <div class="icon">🥋</div>
-        <img src="./VALEN.jpeg" alt="">
+        <div class="placeholder">
+          <div class="icon">🥋</div>
+          <img src="./VALEN.jpeg" alt="">
+        </div>
+        <div class="label">🥋 El Champion</div>
       </div>
-      <div class="label">🥋 El Champion</div>
-
       <div class="photo-card" id="photo-prize">
-        <div class="icon">🏆</div>
-        <img src="./Dinero.gif" alt="">
+        <div class="placeholder">
+          <div class="icon">🏆</div>
+          <img src="./Dinero.gif" alt="">
+        </div>
+        <div class="label">🏆 El Premio</div>
       </div>
-      <div class="label">🏆 El Premio</div>
-
     </div>
 
     <!-- Progress -->

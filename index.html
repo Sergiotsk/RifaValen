@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎰 Rifa - ¡A rifar se ha dicho!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #E63946;
+      --primary-dark: #B92B34;
+      --secondary: #1D3557;
+      --accent: #F4A261;
+      --dark: #1a1a2e;
+      --light: #fafafa;
+      --success: #2A9D8F;
+      --warning: #E9C46A;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--dark);
+      min-height: 100vh;
+      padding: 1rem;
+      color: var(--light);
+      overflow-x: hidden;
+    }
+    /* Background pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(230, 57, 70, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(244, 162, 97, 0.1) 0%, transparent 50%),
+        repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,0.02) 35px, rgba(255,255,255,0.02) 70px);
+      pointer-events: none;
+      z-index: -1;
+    }
+    #app {
+      max-width: 500px;
+      margin: 0 auto;
+      background: linear-gradient(145deg, #1e1e32 0%, #252542 100%);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      user-select: none;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header p {
+      font-size: 14px;
+      color: #888;
+      margin-top: 0.5rem;
+    }
+    /* Photos */
+    .photos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+    .photo-card {
+      background: #151520;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 1;
+      border: 2px dashed rgba(255,255,255,0.1);
+      transition: all 0.3s;
+    }
+    .photo-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .photo-card .placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: #666;
+      text-align: center;
+      padding: 1rem;
+    }
+    .photo-card .placeholder .icon { font-size: 32px; }
+    .photo-card .placeholder span { font-size: 12px; margin-top: 0.5rem; }
+    .photo-card .label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      padding: 1.5rem 0.75rem 0.75rem;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+    }
+    /* Progress bar */
+    .progress-section {
+      margin-bottom: 1.5rem;
+    }
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .progress-header span {
+      font-size: 13px;
+      color: #888;
+    }
+    .progress-header .percent {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--success);
+    }
+    .progress-bar {
+      height: 12px;
+      background: #151520;
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: var(--progress, 0%);
+      background: linear-gradient(90deg, var(--success) 0%, #4ECDC4 100%);
+      border-radius: 6px;
+      transition: width 0.5s ease;
+    }
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+      animation: shimmer 2s infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    /* Countdown */
+    .countdown-box {
+      background: linear-gradient(135deg, rgba(230, 57, 70, 0.2) 0%, rgba(244, 162, 97, 0.1) 100%);
+      border: 1px solid rgba(230, 57, 70, 0.3);
+      border-radius: 16px;
+      padding: 1rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .countdown-box .live-badge {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      animation: pulse 2s infinite;
+      margin-bottom: 0.75rem;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    .countdown-box .date {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+    .countdown-timer .unit {
+      background: #151520;
+      padding: 8px 12px;
+      border-radius: 8px;
+      min-width: 50px;
+    }
+    .countdown-timer .unit .num {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .countdown-timer .unit .label {
+      font-size: 10px;
+      color: #666;
+      text-transform: uppercase;
+    }
+    /* Price box */
+    .price-box {
+      background: linear-gradient(135deg, #1e1e32 0%, #252542 100%);
+      border: 1px solid rgba(244, 162, 97, 0.3);
+      border-radius: 16px;
+      padding: 1.25rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .price-box .label { font-size: 13px; color: #888; }
+    .price-box .amount { font-size: 32px; font-weight: 700; margin-top: 0.25rem; color: var(--accent); }
+    /* Prizes */
+    .prizes-box {
+      background: linear-gradient(135deg, rgba(42, 157, 143, 0.15) 0%, rgba(78, 205, 196, 0.1) 100%);
+      border: 1px solid rgba(42, 157, 143, 0.3);
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .prizes-box h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--success);
+    }
+    .prizes-box .prize {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.5rem 0;
+      font-size: 15px;
+    }
+    .prizes-box .prize .medal { font-size: 20px; }
+    .prizes-box .prize .amount { font-weight: 700; color: var(--accent); margin-left: auto; }
+    /* Instagram */
+    .instagram-box {
+      background: rgba(29, 53, 87, 0.3);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 14px;
+    }
+    .instagram-box .icon { font-size: 18px; }
+    .instagram-box strong { color: var(--accent); }
+    /* Share button */
+    .share-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+      transition: all 0.2s;
+    }
+    .share-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+    }
+    /* Hint */
+    .hint {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 1rem;
+    }
+    .grid button {
+      aspect-ratio: 1;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid rgba(255,255,255,0.1);
+      background: #151520;
+      color: #aaa;
+    }
+    .grid button:hover:not(.reserved):not(.paid) {
+      transform: scale(1.1);
+      border-color: var(--accent);
+      color: white;
+      box-shadow: 0 4px 15px rgba(244, 162, 97, 0.3);
+    }
+    .grid button.reserved {
+      background: linear-gradient(135deg, #F4A261 0%, #E76F51 100%);
+      border-color: #F4A261;
+      color: #1a1a2e;
+    }
+    .grid button.paid {
+      background: linear-gradient(135deg, #2A9D8F 0%, #4ECDC4 100%);
+      border-color: #2A9D8F;
+      color: white;
+    }
+    /* Legend */
+    .legend {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+    .legend span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .legend .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+    }
+    .legend .dot.libre { background: #151520; border: 1px solid #333; }
+    .legend .dot.reservado { background: linear-gradient(135deg, #F4A261, #E76F51); }
+    .legend .dot.pagado { background: linear-gradient(135deg, #2A9D8F, #4ECDC4); }
+    /* Admin badge */
+    .admin-badge {
+      display: none;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .admin-badge span {
+      background: rgba(230, 57, 70, 0.2);
+      color: var(--primary);
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--primary);
+    }
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 100;
+      padding: 1rem;
+      backdrop-filter: blur(10px);
+    }
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(145deg, #1e1e32 0%, #252542 100%);
+      border-radius: 20px;
+      padding: 1.5rem;
+      width: 90%;
+      max-width: 360px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .modal input {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: 1rem;
+      background: #151520;
+      color: white;
+    }
+    .modal input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .modal input::placeholder { color: #666; }
+    .modal-buttons {
+      display: flex;
+      gap: 8px;
+    }
+    .modal button {
+      flex: 1;
+      padding: 14px;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #151520;
+      color: #aaa;
+      transition: all 0.2s;
+    }
+    .modal button:hover {
+      background: #1e1e32;
+      color: white;
+    }
+    .modal button.primary {
+      background: linear-gradient(135deg, var(--accent) 0%, #E76F51 100%);
+      color: #1a1a2e;
+      border-color: var(--accent);
+    }
+    .modal button.reserved {
+      background: linear-gradient(135deg, #F4A261, #E76F51);
+      color: #1a1a2e;
+      border-color: #F4A261;
+    }
+    .modal button.paid {
+      background: linear-gradient(135deg, #2A9D8F, #4ECDC4);
+      color: white;
+      border-color: #2A9D8F;
+    }
+    .modal button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .modal-admin-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .alias-box {
+      background: #151520;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      border: 1px solid rgba(244, 162, 97, 0.3);
+    }
+    .alias-box .label { font-size: 12px; color: #666; }
+    .alias-box .alias { font-size: 24px; font-weight: 700; margin-top: 0.25rem; color: var(--accent); font-family: 'Courier New', monospace; }
+    .modal-center { text-align: center; }
+    .modal-center .icon { font-size: 48px; margin-bottom: 0.5rem; }
+    .modal-center h3 { font-size: 22px; font-weight: 700; margin-bottom: 0.5rem; }
+    .modal-center .sub { font-size: 14px; color: #888; margin-bottom: 1rem; }
+    .modal-center .hint { font-size: 13px; color: #666; margin-bottom: 1rem; }
+    .modal-center .success { color: var(--success); }
+    .modal-center .gif {
+      width: 100%;
+      max-width: 180px;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    /* Celebration overlay */
+    .celebration-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 200;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      animation: fadeIn 0.3s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    .celebration-overlay img {
+      max-width: 300px;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      animation: bounce 0.6s ease-in-out infinite;
+    }
+    .celebration-overlay p {
+      color: white;
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      z-index: 300;
+      animation: confetti-fall 3s linear forwards;
+    }
+    @keyframes confetti-fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+    /* Roulette overlay */
+    .roulette-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 200;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .roulette-num {
+      font-size: 120px;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'Bebas Neue', sans-serif;
+    }
+    .roulette-text {
+      color: #666;
+      font-size: 18px;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="header">
+      <h1 id="main-title">🎰 RIFA VALEN</h1>
+      <p>¡Ayudalo a cumplir su sueño del karate! 🥋</p>
+    </div>
+
+    <!-- Photos -->
+    <div class="photos-grid">
+      <div class="photo-card" id="photo-valen">
+        <div class="placeholder">
+          <div class="icon">🥋</div>
+          <span>Foto de Valen</span>
+        </div>
+        <div class="label">🥋 El Champion</div>
+      </div>
+      <div class="photo-card" id="photo-prize">
+        <div class="placeholder">
+          <div class="icon">🏆</div>
+          <span>Foto del premio</span>
+        </div>
+        <div class="label">🏆 El Premio</div>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-section">
+      <div class="progress-header">
+        <span>Números vendidos</span>
+        <span class="percent" id="progress-percent">0%</span>
+      </div>
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="countdown-box">
+      <div class="live-badge">📺 EN VIVO</div>
+      <div class="date">Miércoles 29 de abril</div>
+      <div class="countdown-timer" id="countdown">
+        <div class="unit"><div class="num" id="days">00</div><div class="label">Días</div></div>
+        <div class="unit"><div class="num" id="hours">00</div><div class="label">Hrs</div></div>
+        <div class="unit"><div class="num" id="mins">00</div><div class="label">Min</div></div>
+        <div class="unit"><div class="num" id="secs">00</div><div class="label">Seg</div></div>
+      </div>
+    </div>
+
+    <div class="price-box">
+      <div class="label">💸 Cada número sale</div>
+      <div class="amount">$3.000</div>
+    </div>
+
+    <div class="prizes-box">
+      <h3>🏆 PREMIOS</h3>
+      <div class="prize"><span class="medal">🥇</span> 1er puesto<span class="amount">$150.000</span></div>
+      <div class="prize"><span class="medal">🥈</span> 2do puesto<span class="amount">$100.000</span></div>
+      <div class="prize"><span class="medal">🥉</span> 3er puesto<span class="amount">$50.000</span></div>
+    </div>
+
+    <div class="instagram-box">
+      <span class="icon">📺</span> Sorteo por Instagram <strong>@sabunnim_liliana</strong>
+    </div>
+
+    <!-- Share button -->
+    <button class="share-btn" id="share-btn">
+      <span>📲</span> Compartir por WhatsApp
+    </button>
+
+    <p class="hint">👇 Tocá tu número de la suerte 👇</p>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="legend">
+      <span><span class="dot libre"></span> Libre</span>
+      <span><span class="dot reservado"></span> Reservado</span>
+      <span><span class="dot pagado"></span> Pagado ✓</span>
+    </div>
+
+    <div class="admin-badge" id="admin-badge">
+      <span>🔐 Modo admin</span>
+    </div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content" id="modal-content"></div>
+  </div>
+
+  <div class="celebration-overlay" id="celebration">
+    <img id="celebration-gif" src="" alt="Celebración">
+    <p id="celebration-text"></p>
+  </div>
+
+  <div class="roulette-overlay" id="roulette">
+    <div class="roulette-num" id="roulette-num">00</div>
+    <div class="roulette-text">Buscando tu número...</div>
+  </div>
+
+  <audio id="sound-success" preload="auto"></audio>
+
+  <script>
+    (function() {
+      const STORAGE_KEY = 'rifa_valen_2026';
+      const ADMIN_PASS = 'RIFAFA2026';
+      const TOTAL_NUMBERS = 20;
+      const SORTEO_DATE = new Date('2026-04-29T20:00:00');
+      
+      // =====================================================
+      // 🎨 CONFIGURACIÓN FÁCIL - CAMBIÁ ESTO COMO QUIERAS
+      // =====================================================
+      
+      // 🔊 SONIDO: URL de un archivo .mp3
+      const SOUND_URL = 'https://www.myinstants.com/media/sounds/messa.mp3';
+      
+      // 🖼️ GIF: URL de un GIF de Giphy
+      const GIF_URL = 'https://media.giphy.com/media/3oz8xRF0v9WMAUVLNK/giphy.gif';
+      
+      // 📷 FOTOS: URLs de las fotos (reemplazá con las tuyas)
+      const VALEN_PHOTO = ''; // Ej: 'https://.../valen.jpg'
+      const PRIZE_PHOTO = ''; // Ej: 'https://.../premio.jpg'
+      
+      // 💬 MENSAJE DE CELEBRACIÓN
+      const CELEBRATION_TEXT = '¡GRACIAS CRACK! 🎉';
+      
+      // =====================================================
+      
+      const frases = [
+        "¡Ese número pica! 🔥",
+        "Buena elección 👀",
+        "Uff, número ganador 🏆",
+        "¡Te lo sentís! 🍀",
+        "Vamos con todo 💪",
+        "Ese es EL número 🔮",
+        "¡Qué ojo! 👁️",
+        "¡Tío, este es el winner! 🦁",
+        "Valen te lo va a agradecer 🙏",
+        "¡Familia unite! 💪"
+      ];
+      
+      let state = { numbers: {}, adminMode: false };
+      let tapCount = 0;
+      let tapTimer = null;
+      
+      // Inicializar elementos
+      document.getElementById('celebration-gif').src = GIF_URL;
+      document.getElementById('celebration-text').textContent = CELEBRATION_TEXT;
+      document.getElementById('sound-success').src = SOUND_URL;
+      
+      // Configurar fotos
+      if (VALEN_PHOTO) {
+        document.getElementById('photo-valen').innerHTML = `<img src="${VALEN_PHOTO}" alt="Valen">`;
+      }
+      if (PRIZE_PHOTO) {
+        document.getElementById('photo-prize').innerHTML = `<img src="${PRIZE_PHOTO}" alt="Premio">`;
+      }
+      
+      function playSound() {
+        const sound = document.getElementById('sound-success');
+        sound.currentTime = 0;
+        sound.play().catch(() => {});
+      }
+      
+      function createConfetti() {
+        const colors = ['#E63946', '#F4A261', '#2A9D8F', '#E9C46A', '#fff'];
+        for (let i = 0; i < 50; i++) {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.animationDelay = Math.random() * 2 + 's';
+          confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+          document.body.appendChild(confetti);
+          setTimeout(() => confetti.remove(), 4000);
+        }
+      }
+      
+      function showCelebration() {
+        const overlay = document.getElementById('celebration');
+        overlay.style.display = 'flex';
+        playSound();
+        createConfetti();
+        
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 3500);
+      }
+      
+      function showRoulette(num, callback) {
+        const overlay = document.getElementById('roulette');
+        const numDisplay = document.getElementById('roulette-num');
+        overlay.style.display = 'flex';
+        
+        let count = 0;
+        const interval = setInterval(() => {
+          numDisplay.textContent = String(Math.floor(Math.random() * TOTAL_NUMBERS) + 1).padStart(2, '0');
+          count++;
+          if (count > 15) {
+            clearInterval(interval);
+            numDisplay.textContent = String(num).padStart(2, '0');
+            setTimeout(() => {
+              overlay.style.display = 'none';
+              callback();
+            }, 500);
+          }
+        }, 100);
+      }
+      
+      function loadState() {
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (saved) state = JSON.parse(saved);
+        } catch(e) {}
+      }
+      
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch(e) {}
+      }
+      
+      function updateProgress() {
+        let total = 0;
+        let paid = 0;
+        for (let i = 1; i <= TOTAL_NUMBERS; i++) {
+          const num = state.numbers[i];
+          if (num && (num.status === 'reserved' || num.status === 'paid')) {
+            total++;
+            if (num.status === 'paid') paid++;
+          }
+        }
+        const percent = Math.round((total / TOTAL_NUMBERS) * 100);
+        document.getElementById('progress-bar').style.setProperty('--progress', percent + '%');
+        document.getElementById('progress-percent').textContent = percent + '%';
+      }
+      
+      function updateCountdown() {
+        const now = new Date();
+        const diff = SORTEO_DATE - now;
+        
+        if (diff <= 0) {
+          document.getElementById('days').textContent = '00';
+          document.getElementById('hours').textContent = '00';
+          document.getElementById('mins').textContent = '00';
+          document.getElementById('secs').textContent = '00';
+          return;
+        }
+        
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        document.getElementById('days').textContent = String(days).padStart(2, '0');
+        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('mins').textContent = String(mins).padStart(2, '0');
+        document.getElementById('secs').textContent = String(secs).padStart(2, '0');
+      }
+      
+      function render() {
+        const grid = document.getElementById('grid');
+        grid.innerHTML = '';
+        
+        for (let i = 1; i <= TOTAL_NUMBERS; i++) {
+          const num = state.numbers[i] || { status: 'available' };
+          const btn = document.createElement('button');
+          btn.textContent = String(i).padStart(2, '0');
+          
+          if (num.status === 'reserved') btn.className = 'reserved';
+          else if (num.status === 'paid') btn.className = 'paid';
+          
+          btn.onclick = () => handleClick(i);
+          grid.appendChild(btn);
+        }
+        
+        document.getElementById('admin-badge').style.display = state.adminMode ? 'block' : 'none';
+        updateProgress();
+      }
+      
+      function handleClick(n) {
+        const num = state.numbers[n] || { status: 'available' };
+        
+        if (state.adminMode) {
+          showAdminModal(n, num);
+        } else {
+          if (num.status === 'available') {
+            showRoulette(n, () => showReserveModal(n));
+          } else if (num.status === 'reserved') {
+            showPaymentModal(n, num);
+          } else {
+            showInfoModal(n, num);
+          }
+        }
+      }
+      
+      function randomFrase() {
+        return frases[Math.floor(Math.random() * frases.length)];
+      }
+      
+      function showReserveModal(n) {
+        const content = document.getElementById('modal-content');
+        content.innerHTML = `
+          <div class="modal-center">
+            <div class="icon">🎟️</div>
+            <h3>Número ${String(n).padStart(2, '0')}</h3>
+            <p class="sub">${randomFrase()}</p>
+          </div>
+          <input type="text" id="inp-name" placeholder="¿A nombre de quién va?">
+          <div class="modal-buttons">
+            <button onclick="closeModal()">Nah, paso</button>
+            <button class="primary" onclick="confirmReserve(${n})">¡Lo quiero!</button>
+          </div>
+        `;
+        document.getElementById('modal').style.display = 'block';
+        setTimeout(() => document.getElementById('inp-name').focus(), 100);
+      }
+      
+      window.confirmReserve = function(n) {
+        const name = document.getElementById('inp-name').value.trim();
+        
+        if (!name) {
+          alert('¡Poné tu nombre así sabemos quién gana!');
+          return;
+        }
+        
+        state.numbers[n] = { status: 'reserved', name };
+        saveState();
+        render();
+        closeModal();
+        
+        showCelebration();
+        
+        setTimeout(() => {
+          showPaymentModal(n, state.numbers[n]);
+        }, 3500);
+      };
+      
+      function showPaymentModal(n, num) {
+        const content = document.getElementById('modal-content');
+        content.innerHTML = `
+          <div class="modal-center">
+            <img class="gif" src="${GIF_URL}" alt="Gracias">
+            <h3>¡Listo ${num.name}!</h3>
+            <p class="sub">El <strong>${String(n).padStart(2, '0')}</strong> es tuyo, solo falta la transferencia</p>
+            <div class="alias-box">
+              <div class="label">Mandá $3.000 a</div>
+              <div class="alias">sefatek.mp</div>
+            </div>
+            <p class="hint">Cuando llegue la plata te lo marcamos como pagado ✓</p>
+            <button class="primary" onclick="closeModal()" style="width: 100%;">Dale, ya transfiero 💸</button>
+          </div>
+        `;
+        document.getElementById('modal').style.display = 'block';
+      }
+      
+      function showInfoModal(n, num) {
+        const content = document.getElementById('modal-content');
+        content.innerHTML = `
+          <div class="modal-center">
+            <div class="icon">✅</div>
+            <h3>Número ${String(n).padStart(2, '0')}</h3>
+            <p class="sub success">Ya está pagado por <strong>${num.name}</strong></p>
+            <p class="hint">Elegí otro que queden 🍀</p>
+            <button onclick="closeModal()" style="width: 100%;">Ver otros números</button>
+          </div>
+        `;
+        document.getElementById('modal').style.display = 'block';
+      }
+      
+      function showAdminModal(n, num) {
+        const content = document.getElementById('modal-content');
+        const statusText = num.status === 'available' ? 'Libre' : num.status === 'reserved' ? 'Reservado' : 'Pagado';
+        const info = num.name ? `<p style="font-size: 15px; margin-bottom: 1rem;">👤 <strong>${num.name}</strong></p>` : '<p style="font-size: 14px; color: #999; margin-bottom: 1rem;">Sin reserva todavía</p>';
+        
+        content.innerHTML = `
+          <div class="modal-center">
+            <h3>🔧 Número ${String(n).padStart(2, '0')}</h3>
+            <p class="sub">Estado: ${statusText}</p>
+            ${info}
+          </div>
+          <div class="modal-admin-buttons">
+            <button onclick="setStatus(${n}, 'available')" ${num.status === 'available' ? 'disabled' : ''}>Liberar número</button>
+            <button class="reserved" onclick="setStatus(${n}, 'reserved')" ${num.status === 'reserved' ? 'disabled' : ''}>Marcar reservado</button>
+            <button class="paid" onclick="setStatus(${n}, 'paid')" ${num.status === 'paid' ? 'disabled' : ''}>✓ Marcar pagado</button>
+            <button onclick="closeModal()" style="margin-top: 0.5rem;">Cerrar</button>
+          </div>
+        `;
+        document.getElementById('modal').style.display = 'block';
+      }
+      
+      window.setStatus = function(n, status) {
+        if (!state.numbers[n]) state.numbers[n] = {};
+        state.numbers[n].status = status;
+        if (status === 'available') {
+          delete state.numbers[n].name;
+        }
+        saveState();
+        render();
+        closeModal();
+      };
+      
+      window.closeModal = function() {
+        document.getElementById('modal').style.display = 'none';
+      };
+      
+      document.getElementById('modal').onclick = function(e) {
+        if (e.target === this) closeModal();
+      };
+      
+      document.getElementById('celebration').onclick = function() {
+        this.style.display = 'none';
+      };
+      
+      // Admin mode - tap title 3 times
+      document.getElementById('main-title').onclick = function() {
+        tapCount++;
+        clearTimeout(tapTimer);
+        tapTimer = setTimeout(() => { tapCount = 0; }, 1000);
+        
+        if (tapCount >= 3) {
+          tapCount = 0;
+          if (state.adminMode) {
+            state.adminMode = false;
+            render();
+          } else {
+            const pass = prompt('🔐 Clave secreta:');
+            if (pass === ADMIN_PASS) {
+              state.adminMode = true;
+              render();
+            }
+          }
+        }
+      };
+      
+      // Share button
+      document.getElementById('share-btn').onclick = function() {
+        const text = '🎰 ¡Entrá a la rifa de Valen! 🥋\n\nAyudalo a cumplir su sueño del karate. Cada número sale $3.000 y hay $300.000 en premios!\n\n';
+        const url = window.location.href;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + url)}`;
+        window.open(whatsappUrl, '_blank');
+      };
+      
+      // Initialize
+      loadState();
+      render();
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    })();
+  </script>
+</body>
+</html>

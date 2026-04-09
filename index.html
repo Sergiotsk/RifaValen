@@ -109,29 +109,17 @@
     }
 
     .photo-card img {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.4s ease;
     }
 
-    .photo-card .placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      color: #666;
-      text-align: center;
-      padding: 1rem;
-    }
-
-    .photo-card .placeholder .icon {
-      font-size: 32px;
-    }
-
-    .photo-card .placeholder span {
-      font-size: 12px;
-      margin-top: 0.5rem;
+    .photo-card:hover img {
+      transform: scale(1.15);
     }
 
     .photo-card .label {
@@ -139,13 +127,14 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-      padding: 1.5rem 0.75rem 0.75rem;
-      font-size: 11px;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+      padding: 2rem 0.75rem 0.5rem;
+      font-size: 12px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 1px;
       color: var(--accent);
+      z-index: 2;
     }
 
     /* Progress bar */
@@ -950,23 +939,16 @@
     <!-- Photos -->
     <div class="photos-grid">
       <div class="photo-card" id="photo-valen">
-        <div class="placeholder">
-
-          <img src="./VALEN.jpeg" alt="">
-
-          <div class="label">🥋 El Champion</div>
-        </div>
+        <img src="./VALEN.jpeg" alt="">
+        <div class="label">🥋 El Champion</div>
       </div>
       <div class="photo-card" id="photo-prize">
-        <div class="placeholder">
-
-          <img src="./Dinero.gif" alt="">
-
-          <div class="label">🏆 El Premio</div>
-        </div>
+        <img src="./Dinero.gif" alt="">
+        <div class="label">🏆 El Premio</div>
       </div>
+    </div>
 
-      <!-- Progress -->
+    <!-- Progress -->
       <div class="progress-section">
         <div class="progress-header">
           <span>Números vendidos</span>
@@ -1072,15 +1054,41 @@
         // 🎨 CONFIGURACIÓN FÁCIL - CAMBIÁ ESTO COMO QUIERAS
         // =====================================================
 
-        // 🔊 SONIDO: URL de un archivo .mp3
-        const SOUND_URL = 'https://www.myinstants.com/media/sounds/messa.mp3';
+        // 🔊 SONIDOS DE AGRADECIMIENTO GRACIOSOS (para kids)
+        const SOUNDS = [
+          'https://www.myinstants.com/media/sounds/gracias-me-gusta-el-dinero.mp3',
+          'https://www.myinstants.com/media/sounds/gracias-i-love-you-nino.mp3',
+          'https://www.myinstants.com/media/sounds/muchas-gracias.mp3',
+          'https://www.myinstants.com/media/sounds/gracias-mi-estimado.mp3',
+          'https://www.myinstants.com/media/sounds/oh-gracias.mp3',
+          'https://www.myinstants.com/media/sounds/gracias-bonito-dia-adios-aldernion.mp3',
+          'https://www.myinstants.com/media/sounds/ay-gracias-muchas-gracias.mp3',
+          'https://www.myinstants.com/media/sounds/gracias-papa-dios.mp3'
+        ];
 
-        // 🖼️ GIF: URL de un GIF de Giphy
-        const GIF_URL = 'https://media.giphy.com/media/3oz8xRF0v9WMAUVLNK/giphy.gif';
-
-        // 📷 FOTOS: URLs de las fotos (reemplazá con las tuyas)
-        const VALEN_PHOTO = ''; // Ej: 'https://.../valen.jpg'
-        const PRIZE_PHOTO = ''; // Ej: 'https://.../premio.jpg'
+        // 🖼️ GIFS DE CELEBRACIÓN/MEMES (distintos por número)
+        const GIFS = [
+          'https://media.giphy.com/media/3oz8xRF0v9WMAUVLNK/giphy.gif',
+          'https://media.giphy.com/media/26ufhUp00gyiOwdig/giphy.gif',
+          'https://media.giphy.com/media/MhHXeM4SpKrpC/giphy.gif',
+          'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif',
+          'https://media.giphy.com/media/o2T6i8g5OaWGY0Bto/giphy.gif',
+          'https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif',
+          'https://media.giphy.com/media/g9582DNuQppxC/giphy.gif',
+          'https://media.giphy.com/media/l0IykDEpFyQeky3mI/giphy.gif',
+          'https://media.giphy.com/media/l41YtZOb9EUABnuqA/giphy.gif',
+          'https://media.giphy.com/media/3oz8xIsloV7zOmt81G/giphy.gif',
+          'https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif',
+          'https://media.giphy.com/media/l4q8mJzEuSSZ72kB2/giphy.gif',
+          'https://media.giphy.com/media/3oz8xIsloV7zOmt81G/giphy.gif',
+          'https://media.giphy.com/media/l0HlvtIPzPdt2usKs/giphy.gif',
+          'https://media.giphy.com/media/26BRv0thfl6mbVYyA/giphy.gif',
+          'https://media.giphy.com/media/3o7TKSjRrfIPjeiVyM/giphy.gif',
+          'https://media.giphy.com/media/l0Iy69RBwZmCXYXGg/giphy.gif',
+          'https://media.giphy.com/media/3o6Zt6ML6BklcajjsX/giphy.gif',
+          'https://media.giphy.com/media/l4FGuhL4U2WikHNqA/giphy.gif',
+          'https://media.giphy.com/media/l0IJJZHsDlWZ9qSZy/giphy.gif'
+        ];
 
         // 💬 MENSAJE DE CELEBRACIÓN
         const CELEBRATION_TEXT = '¡GRACIAS CRACK! 🎉';
@@ -1105,20 +1113,12 @@
         let tapTimer = null;
 
         // Inicializar elementos
-        document.getElementById('celebration-gif').src = GIF_URL;
         document.getElementById('celebration-text').textContent = CELEBRATION_TEXT;
-        document.getElementById('sound-success').src = SOUND_URL;
 
-        // Configurar fotos
-        if (VALEN_PHOTO) {
-          document.getElementById('photo-valen').innerHTML = `<img src="${VALEN_PHOTO}" alt="Valen">`;
-        }
-        if (PRIZE_PHOTO) {
-          document.getElementById('photo-prize').innerHTML = `<img src="${PRIZE_PHOTO}" alt="Premio">`;
-        }
-
-        function playSound() {
+        function playRandomSound() {
           const sound = document.getElementById('sound-success');
+          const randomSound = SOUNDS[Math.floor(Math.random() * SOUNDS.length)];
+          sound.src = randomSound;
           sound.currentTime = 0;
           sound.play().catch(() => { });
         }
@@ -1137,10 +1137,13 @@
           }
         }
 
-        function showCelebration() {
+        function showCelebration(n) {
           const overlay = document.getElementById('celebration');
+          const gifIndex = (n - 1) % GIFS.length;
+          document.getElementById('celebration-gif').src = GIFS[gifIndex];
+          
           overlay.style.display = 'flex';
-          playSound();
+          playRandomSound();
           createConfetti();
 
           setTimeout(() => {
@@ -1295,7 +1298,7 @@
           render();
           closeModal();
 
-          showCelebration();
+          showCelebration(n);
 
           setTimeout(() => {
             showPaymentModal(n, state.numbers[n]);
@@ -1304,9 +1307,10 @@
 
         function showPaymentModal(n, num) {
           const content = document.getElementById('modal-content');
+          const gifIndex = (n - 1) % GIFS.length;
           content.innerHTML = `
           <div class="modal-center">
-            <img class="gif" src="${GIF_URL}" alt="Gracias">
+            <img class="gif" src="${GIFS[gifIndex]}" alt="Gracias">
             <h3>¡Listo ${num.name}!</h3>
             <p class="sub">El <strong>${String(n).padStart(2, '0')}</strong> es tuyo, solo falta la transferencia</p>
             <div class="alias-box">

@@ -951,352 +951,322 @@
     <div class="photos-grid">
       <div class="photo-card" id="photo-valen">
         <div class="placeholder">
-          <div class="icon">🥋</div>
+
           <img src="./VALEN.jpeg" alt="">
+
+          <div class="label">🥋 El Champion</div>
         </div>
-        <div class="label">🥋 El Champion</div>
       </div>
       <div class="photo-card" id="photo-prize">
         <div class="placeholder">
-          <div class="icon">🏆</div>
+
           <img src="./Dinero.gif" alt="">
+
+          <div class="label">🏆 El Premio</div>
         </div>
-        <div class="label">🏆 El Premio</div>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-section">
+        <div class="progress-header">
+          <span>Números vendidos</span>
+          <span class="percent" id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+
+      <!-- Countdown -->
+      <div class="countdown-box">
+        <div class="live-badge">📺 EN VIVO</div>
+        <div class="date">Miércoles 29 de abril</div>
+        <div class="countdown-timer" id="countdown">
+          <div class="unit">
+            <div class="num" id="days">00</div>
+            <div class="label">Días</div>
+          </div>
+          <div class="unit">
+            <div class="num" id="hours">00</div>
+            <div class="label">Hrs</div>
+          </div>
+          <div class="unit">
+            <div class="num" id="mins">00</div>
+            <div class="label">Min</div>
+          </div>
+          <div class="unit">
+            <div class="num" id="secs">00</div>
+            <div class="label">Seg</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="price-box">
+        <div class="label">💸 Cada número sale</div>
+        <div class="amount">$3.000</div>
+      </div>
+
+      <div class="prizes-box">
+        <h3>🏆 PREMIOS</h3>
+        <div class="prize"><span class="medal">🥇</span> 1er puesto<span class="amount">$150.000</span></div>
+        <div class="prize"><span class="medal">🥈</span> 2do puesto<span class="amount">$100.000</span></div>
+        <div class="prize"><span class="medal">🥉</span> 3er puesto<span class="amount">$50.000</span></div>
+      </div>
+
+      <div class="instagram-box">
+        <span class="icon">📺</span> Sorteo por Instagram <a href="https://instagram.com/sabunnim_liliana"
+          target="_blank" style="color: var(--accent); text-decoration: none;"><strong>@sabunnim_liliana</strong></a>
+      </div>
+
+      <!-- Share button -->
+      <button class="share-btn" id="share-btn">
+        <span>📲</span> Compartir por WhatsApp
+      </button>
+
+      <p class="hint">👇 Tocá tu número de la suerte 👇</p>
+
+      <div class="grid" id="grid"></div>
+
+      <div class="legend">
+        <span><span class="dot libre"></span> Libre</span>
+        <span><span class="dot reservado"></span> Reservado</span>
+        <span><span class="dot pagado"></span> Pagado ✓</span>
+      </div>
+
+      <div class="admin-badge" id="admin-badge">
+        <span>🔐 Modo admin</span>
       </div>
     </div>
 
-    <!-- Progress -->
-    <div class="progress-section">
-      <div class="progress-header">
-        <span>Números vendidos</span>
-        <span class="percent" id="progress-percent">0%</span>
-      </div>
-      <div class="progress-bar" id="progress-bar"></div>
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="admin-panel">
+      <h3>📋 Reservas pendientes ⨯<button class="close-admin" onclick="toggleAdminPanel()">×</button></h3>
+      <div class="pending-list" id="pending-list"></div>
     </div>
 
-    <!-- Countdown -->
-    <div class="countdown-box">
-      <div class="live-badge">📺 EN VIVO</div>
-      <div class="date">Miércoles 29 de abril</div>
-      <div class="countdown-timer" id="countdown">
-        <div class="unit">
-          <div class="num" id="days">00</div>
-          <div class="label">Días</div>
-        </div>
-        <div class="unit">
-          <div class="num" id="hours">00</div>
-          <div class="label">Hrs</div>
-        </div>
-        <div class="unit">
-          <div class="num" id="mins">00</div>
-          <div class="label">Min</div>
-        </div>
-        <div class="unit">
-          <div class="num" id="secs">00</div>
-          <div class="label">Seg</div>
-        </div>
-      </div>
+    <!-- Admin shortcut button -->
+    <button class="admin-shortcut" id="admin-shortcut" onclick="toggleAdminPanel()">⚙️</button>
+
+    <div class="modal" id="modal">
+      <div class="modal-content" id="modal-content"></div>
     </div>
 
-    <div class="price-box">
-      <div class="label">💸 Cada número sale</div>
-      <div class="amount">$3.000</div>
+    <div class="celebration-overlay" id="celebration">
+      <img id="celebration-gif" src="" alt="Celebración">
+      <p id="celebration-text"></p>
     </div>
 
-    <div class="prizes-box">
-      <h3>🏆 PREMIOS</h3>
-      <div class="prize"><span class="medal">🥇</span> 1er puesto<span class="amount">$150.000</span></div>
-      <div class="prize"><span class="medal">🥈</span> 2do puesto<span class="amount">$100.000</span></div>
-      <div class="prize"><span class="medal">🥉</span> 3er puesto<span class="amount">$50.000</span></div>
+    <div class="roulette-overlay" id="roulette">
+      <div class="roulette-num" id="roulette-num">00</div>
+      <div class="roulette-text">Buscando tu número...</div>
     </div>
 
-    <div class="instagram-box">
-      <span class="icon">📺</span> Sorteo por Instagram <a href="https://instagram.com/sabunnim_liliana" target="_blank"
-        style="color: var(--accent); text-decoration: none;"><strong>@sabunnim_liliana</strong></a>
-    </div>
+    <audio id="sound-success" preload="auto"></audio>
 
-    <!-- Share button -->
-    <button class="share-btn" id="share-btn">
-      <span>📲</span> Compartir por WhatsApp
-    </button>
+    <script>
+      (function () {
+        const STORAGE_KEY = 'rifa_valen_2026';
+        const ADMIN_PASS = 'RIFAFA2026';
+        const TOTAL_NUMBERS = 20;
+        const SORTEO_DATE = new Date('2026-04-29T20:00:00');
 
-    <p class="hint">👇 Tocá tu número de la suerte 👇</p>
+        // =====================================================
+        // 🎨 CONFIGURACIÓN FÁCIL - CAMBIÁ ESTO COMO QUIERAS
+        // =====================================================
 
-    <div class="grid" id="grid"></div>
+        // 🔊 SONIDO: URL de un archivo .mp3
+        const SOUND_URL = 'https://www.myinstants.com/media/sounds/messa.mp3';
 
-    <div class="legend">
-      <span><span class="dot libre"></span> Libre</span>
-      <span><span class="dot reservado"></span> Reservado</span>
-      <span><span class="dot pagado"></span> Pagado ✓</span>
-    </div>
+        // 🖼️ GIF: URL de un GIF de Giphy
+        const GIF_URL = 'https://media.giphy.com/media/3oz8xRF0v9WMAUVLNK/giphy.gif';
 
-    <div class="admin-badge" id="admin-badge">
-      <span>🔐 Modo admin</span>
-    </div>
-  </div>
+        // 📷 FOTOS: URLs de las fotos (reemplazá con las tuyas)
+        const VALEN_PHOTO = ''; // Ej: 'https://.../valen.jpg'
+        const PRIZE_PHOTO = ''; // Ej: 'https://.../premio.jpg'
 
-  <!-- Admin Panel -->
-  <div class="admin-panel" id="admin-panel">
-    <h3>📋 Reservas pendientes ⨯<button class="close-admin" onclick="toggleAdminPanel()">×</button></h3>
-    <div class="pending-list" id="pending-list"></div>
-  </div>
+        // 💬 MENSAJE DE CELEBRACIÓN
+        const CELEBRATION_TEXT = '¡GRACIAS CRACK! 🎉';
 
-  <!-- Admin shortcut button -->
-  <button class="admin-shortcut" id="admin-shortcut" onclick="toggleAdminPanel()">⚙️</button>
+        // =====================================================
 
-  <div class="modal" id="modal">
-    <div class="modal-content" id="modal-content"></div>
-  </div>
+        const frases = [
+          "¡Ese número pica! 🔥",
+          "Buena elección 👀",
+          "Uff, número ganador 🏆",
+          "¡Te lo sentís! 🍀",
+          "Vamos con todo 💪",
+          "Ese es EL número 🔮",
+          "¡Qué ojo! 👁️",
+          "¡Tío, este es el winner! 🦁",
+          "Valen te lo va a agradecer 🙏",
+          "¡Familia unite! 💪"
+        ];
 
-  <div class="celebration-overlay" id="celebration">
-    <img id="celebration-gif" src="" alt="Celebración">
-    <p id="celebration-text"></p>
-  </div>
+        let state = { numbers: {}, adminMode: false };
+        let tapCount = 0;
+        let tapTimer = null;
 
-  <div class="roulette-overlay" id="roulette">
-    <div class="roulette-num" id="roulette-num">00</div>
-    <div class="roulette-text">Buscando tu número...</div>
-  </div>
+        // Inicializar elementos
+        document.getElementById('celebration-gif').src = GIF_URL;
+        document.getElementById('celebration-text').textContent = CELEBRATION_TEXT;
+        document.getElementById('sound-success').src = SOUND_URL;
 
-  <audio id="sound-success" preload="auto"></audio>
-
-  <script>
-    (function () {
-      const STORAGE_KEY = 'rifa_valen_2026';
-      const ADMIN_PASS = 'RIFAFA2026';
-      const TOTAL_NUMBERS = 20;
-      const SORTEO_DATE = new Date('2026-04-29T20:00:00');
-
-      // =====================================================
-      // 🎨 CONFIGURACIÓN FÁCIL - CAMBIÁ ESTO COMO QUIERAS
-      // =====================================================
-
-      // 🔊 SONIDOS DE AGRADECIMIENTO GRACIOSOS (para kids)
-      const SOUNDS = [
-        'https://www.myinstants.com/media/sounds/gracias-me-gusta-el-dinero.mp3',
-        'https://www.myinstants.com/media/sounds/gracias-i-love-you-nino.mp3',
-        'https://www.myinstants.com/media/sounds/muchas-gracias.mp3',
-        'https://www.myinstants.com/media/sounds/gracias-mi-estimado.mp3',
-        'https://www.myinstants.com/media/sounds/oh-gracias.mp3',
-        'https://www.myinstants.com/media/sounds/gracias-bonito-dia-adios-aldernion.mp3',
-        'https://www.myinstants.com/media/sounds/ay-gracias-muchas-gracias.mp3',
-        'https://www.myinstants.com/media/sounds/gracias-papa-dios.mp3'
-      ];
-
-      // 🖼️ GIFS DE CELEBRACIÓN/MEMES (distintos por número)
-      const GIFS = [
-        'https://media.giphy.com/media/3oz8xRF0v9WMAUVLNK/giphy.gif',
-        'https://media.giphy.com/media/26ufhUp00gyiOwdig/giphy.gif',
-        'https://media.giphy.com/media/MhHXeM4SpKrpC/giphy.gif',
-        'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif',
-        'https://media.giphy.com/media/o2T6i8g5OaWGY0Bto/giphy.gif',
-        'https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif',
-        'https://media.giphy.com/media/g9582DNuQppxC/giphy.gif',
-        'https://media.giphy.com/media/l0IykDEpFyQeky3mI/giphy.gif',
-        'https://media.giphy.com/media/l41YtZOb9EUABnuqA/giphy.gif',
-        'https://media.giphy.com/media/3oz8xIsloV7zOmt81G/giphy.gif',
-        'https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif',
-        'https://media.giphy.com/media/l4q8mJzEuSSZ72kB2/giphy.gif',
-        'https://media.giphy.com/media/3o7TKSjRrfIPjeiVyM/giphy.gif',
-        'https://media.giphy.com/media/l0HlvtIPzPdt2usKs/giphy.gif',
-        'https://media.giphy.com/media/26BRv0thfl6mbVYyA/giphy.gif',
-        'https://media.giphy.com/media/3o7TKMt1VVNkHV2PaE/giphy.gif',
-        'https://media.giphy.com/media/l0Iy69RBwZmCXYXGg/giphy.gif',
-        'https://media.giphy.com/media/3o6Zt6ML6BklcajjsX/giphy.gif',
-        'https://media.giphy.com/media/l4FGuhL4U2WikHNqA/giphy.gif',
-        'https://media.giphy.com/media/l0IJJZHsDlWZ9qSZy/giphy.gif'
-      ];
-
-      // 💬 MENSAJE DE CELEBRACIÓN
-      const CELEBRATION_TEXT = '¡GRACIAS CRACK! 🎉';
-
-      // =====================================================
-
-      const frases = [
-        "¡Ese número pica! 🔥",
-        "Buena elección 👀",
-        "Uff, número ganador 🏆",
-        "¡Te lo sentís! 🍀",
-        "Vamos con todo 💪",
-        "Ese es EL número 🔮",
-        "¡Qué ojo! 👁️",
-        "¡Tío, este es el winner! 🦁",
-        "Valen te lo va a agradecer 🙏",
-        "¡Familia unite! 💪"
-      ];
-
-      let state = { numbers: {}, adminMode: false };
-      let tapCount = 0;
-      let tapTimer = null;
-
-      // Inicializar elementos
-      document.getElementById('celebration-text').textContent = CELEBRATION_TEXT;
-
-      // Configurar fotos
-      if (VALEN_PHOTO) {
-        document.getElementById('photo-valen').innerHTML = `<img src="${VALEN_PHOTO}" alt="Valen">`;
-      }
-      if (PRIZE_PHOTO) {
-        document.getElementById('photo-prize').innerHTML = `<img src="${PRIZE_PHOTO}" alt="Premio">`;
-      }
-
-      function playRandomSound() {
-        const sound = document.getElementById('sound-success');
-        const randomSound = SOUNDS[Math.floor(Math.random() * SOUNDS.length)];
-        sound.src = randomSound;
-        sound.currentTime = 0;
-        sound.play().catch(() => { });
-      }
-
-      function createConfetti() {
-        const colors = ['#E63946', '#F4A261', '#2A9D8F', '#E9C46A', '#fff'];
-        for (let i = 0; i < 50; i++) {
-          const confetti = document.createElement('div');
-          confetti.className = 'confetti';
-          confetti.style.left = Math.random() * 100 + 'vw';
-          confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-          confetti.style.animationDelay = Math.random() * 2 + 's';
-          confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-          document.body.appendChild(confetti);
-          setTimeout(() => confetti.remove(), 4000);
+        // Configurar fotos
+        if (VALEN_PHOTO) {
+          document.getElementById('photo-valen').innerHTML = `<img src="${VALEN_PHOTO}" alt="Valen">`;
         }
-      }
+        if (PRIZE_PHOTO) {
+          document.getElementById('photo-prize').innerHTML = `<img src="${PRIZE_PHOTO}" alt="Premio">`;
+        }
 
-      function showCelebration(n) {
-        const overlay = document.getElementById('celebration');
-        
-        // Usar GIF distinto basado en el número
-        const gifIndex = (n - 1) % GIFS.length;
-        document.getElementById('celebration-gif').src = GIFS[gifIndex];
-        
-        overlay.style.display = 'flex';
-        playRandomSound();
-        createConfetti();
+        function playSound() {
+          const sound = document.getElementById('sound-success');
+          sound.currentTime = 0;
+          sound.play().catch(() => { });
+        }
 
-        setTimeout(() => {
-          overlay.style.display = 'none';
-        }, 3500);
-      }
-
-      function showRoulette(num, callback) {
-        const overlay = document.getElementById('roulette');
-        const numDisplay = document.getElementById('roulette-num');
-        overlay.style.display = 'flex';
-
-        let count = 0;
-        const interval = setInterval(() => {
-          numDisplay.textContent = String(Math.floor(Math.random() * TOTAL_NUMBERS) + 1).padStart(2, '0');
-          count++;
-          if (count > 15) {
-            clearInterval(interval);
-            numDisplay.textContent = String(num).padStart(2, '0');
-            setTimeout(() => {
-              overlay.style.display = 'none';
-              callback();
-            }, 500);
-          }
-        }, 100);
-      }
-
-      function loadState() {
-        try {
-          const saved = localStorage.getItem(STORAGE_KEY);
-          if (saved) state = JSON.parse(saved);
-        } catch (e) { }
-      }
-
-      function saveState() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-        } catch (e) { }
-      }
-
-      function updateProgress() {
-        let total = 0;
-        let paid = 0;
-        for (let i = 1; i <= TOTAL_NUMBERS; i++) {
-          const num = state.numbers[i];
-          if (num && (num.status === 'reserved' || num.status === 'paid')) {
-            total++;
-            if (num.status === 'paid') paid++;
+        function createConfetti() {
+          const colors = ['#E63946', '#F4A261', '#2A9D8F', '#E9C46A', '#fff'];
+          for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDelay = Math.random() * 2 + 's';
+            confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 4000);
           }
         }
-        const percent = Math.round((total / TOTAL_NUMBERS) * 100);
-        document.getElementById('progress-bar').style.setProperty('--progress', percent + '%');
-        document.getElementById('progress-percent').textContent = percent + '%';
-      }
 
-      function updateCountdown() {
-        const now = new Date();
-        const diff = SORTEO_DATE - now;
+        function showCelebration() {
+          const overlay = document.getElementById('celebration');
+          overlay.style.display = 'flex';
+          playSound();
+          createConfetti();
 
-        if (diff <= 0) {
-          document.getElementById('days').textContent = '00';
-          document.getElementById('hours').textContent = '00';
-          document.getElementById('mins').textContent = '00';
-          document.getElementById('secs').textContent = '00';
-          return;
+          setTimeout(() => {
+            overlay.style.display = 'none';
+          }, 3500);
         }
 
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const secs = Math.floor((diff % (1000 * 60)) / 1000);
+        function showRoulette(num, callback) {
+          const overlay = document.getElementById('roulette');
+          const numDisplay = document.getElementById('roulette-num');
+          overlay.style.display = 'flex';
 
-        document.getElementById('days').textContent = String(days).padStart(2, '0');
-        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-        document.getElementById('mins').textContent = String(mins).padStart(2, '0');
-        document.getElementById('secs').textContent = String(secs).padStart(2, '0');
-      }
+          let count = 0;
+          const interval = setInterval(() => {
+            numDisplay.textContent = String(Math.floor(Math.random() * TOTAL_NUMBERS) + 1).padStart(2, '0');
+            count++;
+            if (count > 15) {
+              clearInterval(interval);
+              numDisplay.textContent = String(num).padStart(2, '0');
+              setTimeout(() => {
+                overlay.style.display = 'none';
+                callback();
+              }, 500);
+            }
+          }, 100);
+        }
 
-      function render() {
-        const grid = document.getElementById('grid');
-        grid.innerHTML = '';
+        function loadState() {
+          try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) state = JSON.parse(saved);
+          } catch (e) { }
+        }
 
-        for (let i = 1; i <= TOTAL_NUMBERS; i++) {
-          const num = state.numbers[i] || { status: 'available' };
-          const btn = document.createElement('button');
-          btn.textContent = String(i).padStart(2, '0');
+        function saveState() {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          } catch (e) { }
+        }
 
-          if (num.status === 'reserved') btn.className = 'reserved';
-          else if (num.status === 'paid') btn.className = 'paid';
+        function updateProgress() {
+          let total = 0;
+          let paid = 0;
+          for (let i = 1; i <= TOTAL_NUMBERS; i++) {
+            const num = state.numbers[i];
+            if (num && (num.status === 'reserved' || num.status === 'paid')) {
+              total++;
+              if (num.status === 'paid') paid++;
+            }
+          }
+          const percent = Math.round((total / TOTAL_NUMBERS) * 100);
+          document.getElementById('progress-bar').style.setProperty('--progress', percent + '%');
+          document.getElementById('progress-percent').textContent = percent + '%';
+        }
 
-          // Agregar nombre al hover si existe
-          if (num.name) {
-            btn.setAttribute('data-name', num.name);
+        function updateCountdown() {
+          const now = new Date();
+          const diff = SORTEO_DATE - now;
+
+          if (diff <= 0) {
+            document.getElementById('days').textContent = '00';
+            document.getElementById('hours').textContent = '00';
+            document.getElementById('mins').textContent = '00';
+            document.getElementById('secs').textContent = '00';
+            return;
           }
 
-          btn.onclick = () => handleClick(i);
-          grid.appendChild(btn);
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+          document.getElementById('days').textContent = String(days).padStart(2, '0');
+          document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+          document.getElementById('mins').textContent = String(mins).padStart(2, '0');
+          document.getElementById('secs').textContent = String(secs).padStart(2, '0');
         }
 
-        document.getElementById('admin-badge').style.display = state.adminMode ? 'block' : 'none';
-        updateProgress();
-      }
+        function render() {
+          const grid = document.getElementById('grid');
+          grid.innerHTML = '';
 
-      function handleClick(n) {
-        const num = state.numbers[n] || { status: 'available' };
+          for (let i = 1; i <= TOTAL_NUMBERS; i++) {
+            const num = state.numbers[i] || { status: 'available' };
+            const btn = document.createElement('button');
+            btn.textContent = String(i).padStart(2, '0');
 
-        if (state.adminMode) {
-          showAdminModal(n, num);
-        } else {
-          if (num.status === 'available') {
-            showRoulette(n, () => showReserveModal(n));
-          } else if (num.status === 'reserved') {
-            showPaymentModal(n, num);
+            if (num.status === 'reserved') btn.className = 'reserved';
+            else if (num.status === 'paid') btn.className = 'paid';
+
+            // Agregar nombre al hover si existe
+            if (num.name) {
+              btn.setAttribute('data-name', num.name);
+            }
+
+            btn.onclick = () => handleClick(i);
+            grid.appendChild(btn);
+          }
+
+          document.getElementById('admin-badge').style.display = state.adminMode ? 'block' : 'none';
+          updateProgress();
+        }
+
+        function handleClick(n) {
+          const num = state.numbers[n] || { status: 'available' };
+
+          if (state.adminMode) {
+            showAdminModal(n, num);
           } else {
-            showInfoModal(n, num);
+            if (num.status === 'available') {
+              showRoulette(n, () => showReserveModal(n));
+            } else if (num.status === 'reserved') {
+              showPaymentModal(n, num);
+            } else {
+              showInfoModal(n, num);
+            }
           }
         }
-      }
 
-      function randomFrase() {
-        return frases[Math.floor(Math.random() * frases.length)];
-      }
+        function randomFrase() {
+          return frases[Math.floor(Math.random() * frases.length)];
+        }
 
-      function showReserveModal(n) {
-        const content = document.getElementById('modal-content');
-        content.innerHTML = `
+        function showReserveModal(n) {
+          const content = document.getElementById('modal-content');
+          content.innerHTML = `
           <div class="modal-center">
             <div class="icon">🎟️</div>
             <h3>Número ${String(n).padStart(2, '0')}</h3>
@@ -1308,36 +1278,35 @@
             <button class="primary" onclick="confirmReserve(${n})">¡Lo quiero!</button>
           </div>
         `;
-        document.getElementById('modal').style.display = 'block';
-        setTimeout(() => document.getElementById('inp-name').focus(), 100);
-      }
-
-      window.confirmReserve = function (n) {
-        const name = document.getElementById('inp-name').value.trim();
-
-        if (!name) {
-          alert('¡Poné tu nombre así sabemos quién gana!');
-          return;
+          document.getElementById('modal').style.display = 'block';
+          setTimeout(() => document.getElementById('inp-name').focus(), 100);
         }
 
-        state.numbers[n] = { status: 'reserved', name };
-        saveState();
-        render();
-        closeModal();
+        window.confirmReserve = function (n) {
+          const name = document.getElementById('inp-name').value.trim();
 
-        showCelebration(n);
+          if (!name) {
+            alert('¡Poné tu nombre así sabemos quién gana!');
+            return;
+          }
 
-        setTimeout(() => {
-          showPaymentModal(n, state.numbers[n]);
-        }, 3500);
-      };
+          state.numbers[n] = { status: 'reserved', name };
+          saveState();
+          render();
+          closeModal();
 
-      function showPaymentModal(n, num) {
-        const content = document.getElementById('modal-content');
-        const gifIndex = (n - 1) % GIFS.length;
-        content.innerHTML = `
+          showCelebration();
+
+          setTimeout(() => {
+            showPaymentModal(n, state.numbers[n]);
+          }, 3500);
+        };
+
+        function showPaymentModal(n, num) {
+          const content = document.getElementById('modal-content');
+          content.innerHTML = `
           <div class="modal-center">
-            <img class="gif" src="${GIFS[gifIndex]}" alt="Gracias">
+            <img class="gif" src="${GIF_URL}" alt="Gracias">
             <h3>¡Listo ${num.name}!</h3>
             <p class="sub">El <strong>${String(n).padStart(2, '0')}</strong> es tuyo, solo falta la transferencia</p>
             <div class="alias-box">
@@ -1348,12 +1317,12 @@
             <button class="primary" onclick="closeModal()" style="width: 100%;">Dale, ya transfiero 💸</button>
           </div>
         `;
-        document.getElementById('modal').style.display = 'block';
-      }
+          document.getElementById('modal').style.display = 'block';
+        }
 
-      function showInfoModal(n, num) {
-        const content = document.getElementById('modal-content');
-        content.innerHTML = `
+        function showInfoModal(n, num) {
+          const content = document.getElementById('modal-content');
+          content.innerHTML = `
           <div class="modal-center">
             <div class="icon">✅</div>
             <h3>Número ${String(n).padStart(2, '0')}</h3>
@@ -1362,15 +1331,15 @@
             <button onclick="closeModal()" style="width: 100%;">Ver otros números</button>
           </div>
         `;
-        document.getElementById('modal').style.display = 'block';
-      }
+          document.getElementById('modal').style.display = 'block';
+        }
 
-      function showAdminModal(n, num) {
-        const content = document.getElementById('modal-content');
-        const statusText = num.status === 'available' ? 'Libre' : num.status === 'reserved' ? 'Reservado' : 'Pagado';
-        const info = num.name ? `<p style="font-size: 15px; margin-bottom: 1rem;">👤 <strong>${num.name}</strong></p>` : '<p style="font-size: 14px; color: #999; margin-bottom: 1rem;">Sin reserva todavía</p>';
+        function showAdminModal(n, num) {
+          const content = document.getElementById('modal-content');
+          const statusText = num.status === 'available' ? 'Libre' : num.status === 'reserved' ? 'Reservado' : 'Pagado';
+          const info = num.name ? `<p style="font-size: 15px; margin-bottom: 1rem;">👤 <strong>${num.name}</strong></p>` : '<p style="font-size: 14px; color: #999; margin-bottom: 1rem;">Sin reserva todavía</p>';
 
-        content.innerHTML = `
+          content.innerHTML = `
           <div class="modal-center">
             <h3>🔧 Número ${String(n).padStart(2, '0')}</h3>
             <p class="sub">Estado: ${statusText}</p>
@@ -1383,111 +1352,111 @@
             <button onclick="closeModal()" style="margin-top: 0.5rem;">Cerrar</button>
           </div>
         `;
-        document.getElementById('modal').style.display = 'block';
-      }
-
-      window.setStatus = function (n, status) {
-        if (!state.numbers[n]) state.numbers[n] = {};
-        state.numbers[n].status = status;
-        if (status === 'available') {
-          delete state.numbers[n].name;
+          document.getElementById('modal').style.display = 'block';
         }
-        saveState();
-        render();
-        closeModal();
-      };
 
-      window.closeModal = function () {
-        document.getElementById('modal').style.display = 'none';
-      };
+        window.setStatus = function (n, status) {
+          if (!state.numbers[n]) state.numbers[n] = {};
+          state.numbers[n].status = status;
+          if (status === 'available') {
+            delete state.numbers[n].name;
+          }
+          saveState();
+          render();
+          closeModal();
+        };
 
-      document.getElementById('modal').onclick = function (e) {
-        if (e.target === this) closeModal();
-      };
+        window.closeModal = function () {
+          document.getElementById('modal').style.display = 'none';
+        };
 
-      document.getElementById('celebration').onclick = function () {
-        this.style.display = 'none';
-      };
+        document.getElementById('modal').onclick = function (e) {
+          if (e.target === this) closeModal();
+        };
 
-      // Admin mode - tap title 3 times
-      document.getElementById('main-title').onclick = function () {
-        tapCount++;
-        clearTimeout(tapTimer);
-        tapTimer = setTimeout(() => { tapCount = 0; }, 1000);
+        document.getElementById('celebration').onclick = function () {
+          this.style.display = 'none';
+        };
 
-        if (tapCount >= 3) {
-          tapCount = 0;
-          if (state.adminMode) {
-            state.adminMode = false;
-            document.getElementById('admin-panel').classList.remove('show');
-            document.getElementById('admin-shortcut').style.display = 'block';
-            render();
-          } else {
-            const pass = prompt('🔐 Clave secreta:');
-            if (pass === ADMIN_PASS) {
-              state.adminMode = true;
-              document.getElementById('admin-panel').classList.add('show');
-              document.getElementById('admin-shortcut').style.display = 'none';
-              renderPendingList();
+        // Admin mode - tap title 3 times
+        document.getElementById('main-title').onclick = function () {
+          tapCount++;
+          clearTimeout(tapTimer);
+          tapTimer = setTimeout(() => { tapCount = 0; }, 1000);
+
+          if (tapCount >= 3) {
+            tapCount = 0;
+            if (state.adminMode) {
+              state.adminMode = false;
+              document.getElementById('admin-panel').classList.remove('show');
+              document.getElementById('admin-shortcut').style.display = 'block';
               render();
+            } else {
+              const pass = prompt('🔐 Clave secreta:');
+              if (pass === ADMIN_PASS) {
+                state.adminMode = true;
+                document.getElementById('admin-panel').classList.add('show');
+                document.getElementById('admin-shortcut').style.display = 'none';
+                renderPendingList();
+                render();
+              }
+            }
+          }
+        };
+
+        // Share button
+        document.getElementById('share-btn').onclick = function () {
+          const text = '🎰 ¡Entrá a la rifa de Valen! 🥋\n\nAyudalo a pagar su examen de cinturón punta amarilla y sus guantes. Cada número sale $3.000 y hay $300.000 en premios!\n\n';
+          const url = window.location.href;
+          const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + url)}`;
+          window.open(whatsappUrl, '_blank');
+        };
+
+        // Admin panel
+        function toggleAdminPanel() {
+          const panel = document.getElementById('admin-panel');
+          const shortcut = document.getElementById('admin-shortcut');
+
+          if (panel.classList.contains('show')) {
+            panel.classList.remove('show');
+            shortcut.style.display = 'block';
+          } else {
+            const pass = prompt('🔐 Clave admin:');
+            if (pass === ADMIN_PASS) {
+              panel.classList.add('show');
+              shortcut.style.display = 'none';
+              renderPendingList();
+            } else {
+              alert('Clave incorrecta');
             }
           }
         }
-      };
 
-      // Share button
-      document.getElementById('share-btn').onclick = function () {
-        const text = '🎰 ¡Entrá a la rifa de Valen! 🥋\n\nAyudalo a cumplir su sueño del karate. Cada número sale $3.000 y hay $300.000 en premios!\n\n';
-        const url = window.location.href;
-        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + url)}`;
-        window.open(whatsappUrl, '_blank');
-      };
+        window.toggleAdminPanel = toggleAdminPanel;
 
-      // Admin panel
-      function toggleAdminPanel() {
-        const panel = document.getElementById('admin-panel');
-        const shortcut = document.getElementById('admin-shortcut');
+        function renderPendingList() {
+          const list = document.getElementById('pending-list');
+          const reserved = [];
+          const paid = [];
 
-        if (panel.classList.contains('show')) {
-          panel.classList.remove('show');
-          shortcut.style.display = 'block';
-        } else {
-          const pass = prompt('🔐 Clave admin:');
-          if (pass === ADMIN_PASS) {
-            panel.classList.add('show');
-            shortcut.style.display = 'none';
-            renderPendingList();
-          } else {
-            alert('Clave incorrecta');
+          for (let i = 1; i <= TOTAL_NUMBERS; i++) {
+            const num = state.numbers[i];
+            if (num && num.status === 'reserved') {
+              reserved.push({ num: i, name: num.name });
+            } else if (num && num.status === 'paid') {
+              paid.push({ num: i, name: num.name });
+            }
           }
-        }
-      }
 
-      window.toggleAdminPanel = toggleAdminPanel;
-
-      function renderPendingList() {
-        const list = document.getElementById('pending-list');
-        const reserved = [];
-        const paid = [];
-
-        for (let i = 1; i <= TOTAL_NUMBERS; i++) {
-          const num = state.numbers[i];
-          if (num && num.status === 'reserved') {
-            reserved.push({ num: i, name: num.name });
-          } else if (num && num.status === 'paid') {
-            paid.push({ num: i, name: num.name });
+          if (reserved.length === 0 && paid.length === 0) {
+            list.innerHTML = '<div class="no-pending">No hay reservas aún 📭</div>';
+            return;
           }
-        }
 
-        if (reserved.length === 0 && paid.length === 0) {
-          list.innerHTML = '<div class="no-pending">No hay reservas aún 📭</div>';
-          return;
-        }
+          let html = '';
 
-        let html = '';
-
-        if (reserved.length > 0) {
-          html += `
+          if (reserved.length > 0) {
+            html += `
             <div class="pending-section">
               <div class="pending-section-title reserved">
                 ⏳ Reservas pendientes <span class="count">${reserved.length}</span>
@@ -1505,10 +1474,10 @@
               `).join('')}
             </div>
           `;
-        }
+          }
 
-        if (paid.length > 0) {
-          html += `
+          if (paid.length > 0) {
+            html += `
             <div class="pending-section">
               <div class="pending-section-title paid">
                 ✅ Pagados <span class="count">${paid.length}</span>
@@ -1525,39 +1494,39 @@
               `).join('')}
             </div>
           `;
+          }
+
+          list.innerHTML = html;
         }
 
-        list.innerHTML = html;
-      }
-
-      window.confirmPayment = function (n) {
-        if (!state.numbers[n]) return;
-        state.numbers[n].status = 'paid';
-        saveState();
-        render();
-        renderPendingList();
-      };
-
-      window.cancelReservation = function (n) {
-        if (!state.numbers[n]) return;
-
-        const confirm = prompt(`¿Cancelar número ${String(n).padStart(2, '0')} de ${state.numbers[n].name}?\n\nEscribí "CONFIRMAR" para cancelar:`);
-
-        if (confirm === 'CONFIRMAR') {
-          delete state.numbers[n];
+        window.confirmPayment = function (n) {
+          if (!state.numbers[n]) return;
+          state.numbers[n].status = 'paid';
           saveState();
           render();
           renderPendingList();
-        }
-      };
+        };
 
-      // Initialize
-      loadState();
-      render();
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
-    })();
-  </script>
+        window.cancelReservation = function (n) {
+          if (!state.numbers[n]) return;
+
+          const confirm = prompt(`¿Cancelar número ${String(n).padStart(2, '0')} de ${state.numbers[n].name}?\n\nEscribí "CONFIRMAR" para cancelar:`);
+
+          if (confirm === 'CONFIRMAR') {
+            delete state.numbers[n];
+            saveState();
+            render();
+            renderPendingList();
+          }
+        };
+
+        // Initialize
+        loadState();
+        render();
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+      })();
+    </script>
 </body>
 
 </html>

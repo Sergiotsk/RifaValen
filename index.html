@@ -397,9 +397,34 @@
     .pending-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      max-height: 200px;
+      gap: 12px;
+      max-height: 300px;
       overflow-y: auto;
+    }
+    .pending-section {
+      margin-bottom: 0.5rem;
+    }
+    .pending-section-title {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pending-section-title .count {
+      background: #333;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+    }
+    .pending-section-title.reserved .count {
+      background: rgba(244, 162, 97, 0.3);
+      color: var(--accent);
+    }
+    .pending-section-title.paid .count {
+      background: rgba(42, 157, 143, 0.3);
+      color: var(--success);
     }
     .pending-item {
       display: flex;
@@ -418,14 +443,44 @@
       flex: 1;
       font-size: 14px;
     }
+    .pending-item .status-badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .pending-item .status-badge.reserved {
+      background: rgba(244, 162, 97, 0.2);
+      color: var(--accent);
+    }
+    .pending-item .status-badge.paid {
+      background: rgba(42, 157, 143, 0.2);
+      color: var(--success);
+    }
+    .pending-item .actions {
+      display: flex;
+      gap: 6px;
+    }
     .pending-item .confirm-btn {
       background: var(--success);
       color: white;
       border: none;
-      padding: 6px 12px;
+      padding: 6px 10px;
       border-radius: 6px;
-      font-size: 12px;
+      font-size: 11px;
       cursor: pointer;
+    }
+    .pending-item .cancel-btn {
+      background: #333;
+      color: #888;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .pending-item .cancel-btn:hover {
+      background: var(--primary);
+      color: white;
     }
     .pending-item .confirm-btn:hover {
       opacity: 0.9;
@@ -1117,27 +1172,67 @@
       
       function renderPendingList() {
         const list = document.getElementById('pending-list');
-        const pending = [];
+        const reserved = [];
+        const paid = [];
         
         for (let i = 1; i <= TOTAL_NUMBERS; i++) {
           const num = state.numbers[i];
           if (num && num.status === 'reserved') {
-            pending.push({ num: i, name: num.name });
+            reserved.push({ num: i, name: num.name });
+          } else if (num && num.status === 'paid') {
+            paid.push({ num: i, name: num.name });
           }
         }
         
-        if (pending.length === 0) {
-          list.innerHTML = '<div class="no-pending">No hay reservas pendientes ✓</div>';
+        if (reserved.length === 0 && paid.length === 0) {
+          list.innerHTML = '<div class="no-pending">No hay reservas aún 📭</div>';
           return;
         }
         
-        list.innerHTML = pending.map(p => `
-          <div class="pending-item">
-            <span class="num">${String(p.num).padStart(2, '0')}</span>
-            <span class="name">${p.name}</span>
-            <button class="confirm-btn" onclick="confirmPayment(${p.num})">✓ Confirmar</button>
-          </div>
-        `).join('');
+        let html = '';
+        
+        if (reserved.length > 0) {
+          html += `
+            <div class="pending-section">
+              <div class="pending-section-title reserved">
+                ⏳ Reservas pendientes <span class="count">${reserved.length}</span>
+              </div>
+              ${reserved.map(p => `
+                <div class="pending-item">
+                  <span class="num">${String(p.num).padStart(2, '0')}</span>
+                  <span class="name">${p.name}</span>
+                  <span class="status-badge reserved">esperando</span>
+                  <div class="actions">
+                    <button class="confirm-btn" onclick="confirmPayment(${p.num})">✓ Confirmar</button>
+                    <button class="cancel-btn" onclick="cancelReservation(${p.num})">✕ Cancelar</button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }
+        
+        if (paid.length > 0) {
+          html += `
+            <div class="pending-section">
+              <div class="pending-section-title paid">
+                ✅ Pagados <span class="count">${paid.length}</span>
+              </div>
+              ${paid.map(p => `
+                <div class="pending-item">
+                  <span class="num">${String(p.num).padStart(2, '0')}</span>
+                  <span class="name">${p.name}</span>
+                  <span class="status-badge paid">pagado</span>
+                  <div class="actions">
+                    <button class="cancel-btn" onclick="cancelReservation(${p.num})">✕ Cancelar</button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }
+        
+        list.innerHTML = html;
       }
       
       window.confirmPayment = function(n) {
@@ -1146,12 +1241,19 @@
         saveState();
         render();
         renderPendingList();
+      };
+      
+      window.cancelReservation = function(n) {
+        if (!state.numbers[n]) return;
         
-        // Feedback visual
-        const btn = event.target;
-        btn.textContent = '✓ Listo!';
-        btn.style.background = '#666';
-        setTimeout(() => btn.remove(), 1000);
+        const confirm = prompt(`¿Cancelar número ${String(n).padStart(2, '0')} de ${state.numbers[n].name}?\n\nEscribí "CONFIRMAR" para cancelar:`);
+        
+        if (confirm === 'CONFIRMAR') {
+          delete state.numbers[n];
+          saveState();
+          render();
+          renderPendingList();
+        }
       };
       
       // Initialize

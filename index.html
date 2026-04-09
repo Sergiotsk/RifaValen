@@ -306,6 +306,7 @@
       margin-bottom: 1rem;
     }
     .grid button {
+      position: relative;
       aspect-ratio: 1;
       font-size: 18px;
       font-weight: 700;
@@ -326,6 +327,32 @@
       background: linear-gradient(135deg, #F4A261 0%, #E76F51 100%);
       border-color: #F4A261;
       color: #1a1a2e;
+    }
+    .grid button:hover::after {
+      content: attr(data-name);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e1e32;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 10;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .grid button.reserved:hover::after {
+      background: linear-gradient(135deg, #F4A261, #E76F51);
+      color: #1a1a2e;
+      border: none;
+    }
+    .grid button.paid {
+      background: linear-gradient(135deg, #2A9D8F 0%, #4ECDC4 100%);
+      border-color: #2A9D8F;
+      color: white;
     }
     .grid button.paid {
       background: linear-gradient(135deg, #2A9D8F 0%, #4ECDC4 100%);
@@ -971,6 +998,11 @@
           
           if (num.status === 'reserved') btn.className = 'reserved';
           else if (num.status === 'paid') btn.className = 'paid';
+          
+          // Agregar nombre al hover si existe
+          if (num.name) {
+            btn.setAttribute('data-name', num.name);
+          }
           
           btn.onclick = () => handleClick(i);
           grid.appendChild(btn);

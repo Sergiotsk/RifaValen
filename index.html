@@ -1518,15 +1518,23 @@
         };
 
         window.cancelReservation = function (n) {
-          if (!state.numbers[n]) return;
+          const numData = state.numbers[n];
+          
+          if (!numData) {
+            alert('Error: número no encontrado en los datos');
+            return;
+          }
 
-          const confirm = prompt(`¿Cancelar número ${formatNum(n)} de ${state.numbers[n].name}?\n\nEscribí "CONFIRMAR" para cancelar:`);
+          const confirmText = prompt(`¿Cancelar número ${formatNum(n)} de ${numData.name}?\n\nEstado actual: ${numData.status}\n\nEscribí "CANCELAR" para confirmar:`);
 
-          if (confirm === 'CONFIRMAR') {
+          if (confirmText === 'CANCELAR') {
             delete state.numbers[n];
             saveState();
             render();
             renderPendingList();
+            alert(`Número ${formatNum(n)} cancelado y liberado ✓`);
+          } else if (confirmText !== null && confirmText !== 'CANCELAR') {
+            alert('Texto incorrecto. Escribí "CANCELAR" para confirmar la cancelación.');
           }
         };
 

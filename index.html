@@ -1048,6 +1048,7 @@
         const STORAGE_KEY = 'rifa_valen_2026';
         const ADMIN_PASS = 'RIFAFA2026';
         const TOTAL_NUMBERS = 20;
+        const TOTAL_START = 401;  // Números del 401 al 420
         const SORTEO_DATE = new Date('2026-04-29T20:00:00');
 
         // =====================================================
@@ -1158,11 +1159,12 @@
 
           let count = 0;
           const interval = setInterval(() => {
-            numDisplay.textContent = String(Math.floor(Math.random() * TOTAL_NUMBERS) + 1).padStart(2, '0');
+            const randomNum = Math.floor(Math.random() * TOTAL_NUMBERS) + 1;
+            numDisplay.textContent = formatNum(randomNum);
             count++;
             if (count > 15) {
               clearInterval(interval);
-              numDisplay.textContent = String(num).padStart(2, '0');
+              numDisplay.textContent = formatNum(num);
               setTimeout(() => {
                 overlay.style.display = 'none';
                 callback();
@@ -1222,23 +1224,27 @@
           document.getElementById('secs').textContent = String(secs).padStart(2, '0');
         }
 
+        function formatNum(i) {
+          return String(TOTAL_START + i - 1).padStart(3, '0');
+        }
+
         function render() {
           const grid = document.getElementById('grid');
           grid.innerHTML = '';
-
+          
           for (let i = 1; i <= TOTAL_NUMBERS; i++) {
             const num = state.numbers[i] || { status: 'available' };
             const btn = document.createElement('button');
-            btn.textContent = String(i).padStart(2, '0');
-
+            btn.textContent = formatNum(i);
+            
             if (num.status === 'reserved') btn.className = 'reserved';
             else if (num.status === 'paid') btn.className = 'paid';
-
+            
             // Agregar nombre al hover si existe
             if (num.name) {
               btn.setAttribute('data-name', num.name);
             }
-
+            
             btn.onclick = () => handleClick(i);
             grid.appendChild(btn);
           }
@@ -1272,7 +1278,7 @@
           content.innerHTML = `
           <div class="modal-center">
             <div class="icon">🎟️</div>
-            <h3>Número ${String(n).padStart(2, '0')}</h3>
+            <h3>Número ${formatNum(n)}</h3>
             <p class="sub">${randomFrase()}</p>
           </div>
           <input type="text" id="inp-name" placeholder="¿A nombre de quién va?">
@@ -1312,7 +1318,7 @@
           <div class="modal-center">
             <img class="gif" src="${GIFS[gifIndex]}" alt="Gracias">
             <h3>¡Listo ${num.name}!</h3>
-            <p class="sub">El <strong>${String(n).padStart(2, '0')}</strong> es tuyo, solo falta la transferencia</p>
+            <p class="sub">El <strong>${formatNum(n)}</strong> es tuyo, solo falta la transferencia</p>
             <div class="alias-box">
               <div class="label">Mandá $3.000 a</div>
               <div class="alias">sefatek.mp</div>
@@ -1329,7 +1335,7 @@
           content.innerHTML = `
           <div class="modal-center">
             <div class="icon">✅</div>
-            <h3>Número ${String(n).padStart(2, '0')}</h3>
+            <h3>Número ${formatNum(n)}</h3>
             <p class="sub success">Ya está pagado por <strong>${num.name}</strong></p>
             <p class="hint">Elegí otro que queden 🍀</p>
             <button onclick="closeModal()" style="width: 100%;">Ver otros números</button>
@@ -1345,7 +1351,7 @@
 
           content.innerHTML = `
           <div class="modal-center">
-            <h3>🔧 Número ${String(n).padStart(2, '0')}</h3>
+            <h3>🔧 Número ${formatNum(n)}</h3>
             <p class="sub">Estado: ${statusText}</p>
             ${info}
           </div>
@@ -1467,7 +1473,7 @@
               </div>
               ${reserved.map(p => `
                 <div class="pending-item">
-                  <span class="num">${String(p.num).padStart(2, '0')}</span>
+                  <span class="num">${formatNum(p.num)}</span>
                   <span class="name">${p.name}</span>
                   <span class="status-badge reserved">esperando</span>
                   <div class="actions">
@@ -1488,7 +1494,7 @@
               </div>
               ${paid.map(p => `
                 <div class="pending-item">
-                  <span class="num">${String(p.num).padStart(2, '0')}</span>
+                  <span class="num">${formatNum(p.num)}</span>
                   <span class="name">${p.name}</span>
                   <span class="status-badge paid">pagado</span>
                   <div class="actions">
@@ -1514,7 +1520,7 @@
         window.cancelReservation = function (n) {
           if (!state.numbers[n]) return;
 
-          const confirm = prompt(`¿Cancelar número ${String(n).padStart(2, '0')} de ${state.numbers[n].name}?\n\nEscribí "CONFIRMAR" para cancelar:`);
+          const confirm = prompt(`¿Cancelar número ${formatNum(n)} de ${state.numbers[n].name}?\n\nEscribí "CONFIRMAR" para cancelar:`);
 
           if (confirm === 'CONFIRMAR') {
             delete state.numbers[n];

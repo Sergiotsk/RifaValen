@@ -941,7 +941,7 @@
     <!-- Photos -->
     <div class="photos-grid">
       <div class="photo-card" id="photo-valen">
-        <img src="./ELIAN.jpg" alt="">
+        <img src="./VALEN.jpeg" alt="">
         <div class="label">🥋 El Champion</div>
       </div>
       <div class="photo-card" id="photo-prize">
@@ -1047,29 +1047,25 @@
 
   <script>
     (function () {
-      const STORAGE_KEY = 'rifa_elian_2026';
-      const ADMIN_PASS = 'RifaEli2026';
+      const STORAGE_KEY = 'rifa_valen_2026';
+      const ADMIN_PASS = 'RifaValen2026';
       const TOTAL_NUMBERS = 20;
-      const TOTAL_START = 401;  // Números del 401 al 420
+      const TOTAL_START = 401;
       const SORTEO_DATE = new Date('2026-04-29T20:00:00');
 
-      // =====================================================
-      // 🔥 FIREBASE CONFIG - RIFA VALEN 2026
-      // =====================================================
       const firebaseConfig = {
-        apiKey: "AIzaSyC6YgTKYfhhSWwOLMFXyPz3iNoWhzx_sOU",
-        authDomain: "rifa-elian-2026.firebaseapp.com",
-        databaseURL: "https://rifa-elian-2026-default-rtdb.firebaseio.com/",
-        projectId: "rifa-elian-2026",
-        storageBucket: "rifa-elian-2026.firebasestorage.app",
-        messagingSenderId: "710331810842",
-        appId: "1:710331810842:web:0493a6fa15c17f39707da3"
+        apiKey: "AIzaSyCmpW2381o9I5ZfwV1a_2OjelLX3kwxmFA",
+        authDomain: "rifa-valen-2026.firebaseapp.com",
+        databaseURL: "https://rifa-valen-2026-default-rtdb.firebaseio.com",
+        projectId: "rifa-valen-2026",
+        storageBucket: "rifa-valen-2026.firebasestorage.app",
+        messagingSenderId: "593535772444",
+        appId: "1:593535772444:web:7f6cc537f410497d69bcd9"
       };
 
-      // Inicializar Firebase
       firebase.initializeApp(firebaseConfig);
       const db = firebase.database();
-      const RIFA_REF = db.ref('rifa_elian_2026');
+      const RIFA_REF = db.ref('rifa_valen_2026');
 
       // Escuchar cambios en tiempo real
       RIFA_REF.on('value', (snapshot) => {

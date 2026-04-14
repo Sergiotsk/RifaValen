@@ -1,0 +1,82 @@
+{
+  "rifa_valen_2026": {
+    "lastUpdate": 1776126112478,
+    "numbers": [
+      null,
+      {
+        "name": "Ruben",
+        "status": "paid"
+      },
+      {
+        "name": "Ruben",
+        "status": "paid"
+      },
+      {
+        "name": "Candela",
+        "status": "paid"
+      },
+      {
+        "name": "Ruben",
+        "status": "paid"
+      },
+      {
+        "name": "Fernando",
+        "status": "paid"
+      },
+      {
+        "name": "Bruno 2",
+        "status": "paid"
+      },
+      null,
+      {
+        "name": "Sheila",
+        "status": "paid"
+      },
+      {
+        "name": "Noelia",
+        "status": "paid"
+      },
+      {
+        "name": "Bruno",
+        "status": "paid"
+      },
+      {
+        "name": "Sheila",
+        "status": "paid"
+      },
+      {
+        "name": "Noelia",
+        "status": "paid"
+      },
+      {
+        "name": "Silviatscherni",
+        "status": "paid"
+      },
+      {
+        "name": "Javier",
+        "status": "paid"
+      },
+      {
+        "name": "Rosendo",
+        "status": "reserved"
+      },
+      null,
+      {
+        "name": "Soledad",
+        "status": "paid"
+      },
+      {
+        "name": "Fernando",
+        "status": "paid"
+      },
+      {
+        "name": "Pame",
+        "status": "reserved"
+      },
+      {
+        "name": "Sheila",
+        "status": "paid"
+      }
+    ]
+  }
+}

@@ -1048,11 +1048,14 @@
   <script>
     (function () {
       const STORAGE_KEY = 'rifa_valen_2026';
-      const ADMIN_PASS = 'RifaValen2026';
+      const ADMIN_PASS = 'RIFAFA2026';
       const TOTAL_NUMBERS = 20;
-      const TOTAL_START = 401;
+      const TOTAL_START = 401;  // Números del 401 al 420
       const SORTEO_DATE = new Date('2026-04-29T20:00:00');
 
+      // =====================================================
+      // 🔥 FIREBASE CONFIG - RIFA VALEN 2026
+      // =====================================================
       const firebaseConfig = {
         apiKey: "AIzaSyCmpW2381o9I5ZfwV1a_2OjelLX3kwxmFA",
         authDomain: "rifa-valen-2026.firebaseapp.com",
@@ -1063,9 +1066,10 @@
         appId: "1:593535772444:web:7f6cc537f410497d69bcd9"
       };
 
+      // Inicializar Firebase
       firebase.initializeApp(firebaseConfig);
       const db = firebase.database();
-      const RIFA_REF = db.ref('rifa_valen_2026');
+      const RIFA_REF = db.ref('rifa_elian_2026');
 
       // Escuchar cambios en tiempo real
       RIFA_REF.on('value', (snapshot) => {
